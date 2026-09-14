@@ -1108,10 +1108,12 @@ document.getElementById("viewMode").onclick=e=>{
   document.querySelector(".app").classList.toggle("pregame",view==="pregame");
   document.querySelector(".app").classList.toggle("live",view==="live");
   document.querySelector(".app").classList.toggle("model",view==="model");
+  document.querySelector(".app").classList.toggle("deepdive",view==="deepdive");
   stopLive();
   if(view==="pregame")renderPregame();
   else if(view==="live"){renderLive();startLiveWS();}
   else if(view==="model")renderModel();
+  else if(view==="deepdive")renderDeepDive();
   else if(chartA)chartA.timeScale().fitContent();
 };
 
