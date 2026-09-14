@@ -8,21 +8,21 @@
 <style>
 :root{--bg:#131722;--pane:#1e222d;--pane2:#171b26;--line:#2a2e39;--text:#d1d4dc;--muted:#787b86;--accent:#2962ff;--up:#26a69a;--down:#ef5350;--gold:#d4a017;--warn:#ff9800}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:12px/1.35 "Trebuchet MS","Segoe UI",sans-serif}
+html,body{margin:0;height:100%;overflow-x:hidden;background:var(--bg);color:var(--text);font:12px/1.35 "Trebuchet MS","Segoe UI",sans-serif}
 button{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer}
 input{font:inherit;color:inherit}
-.app{display:grid;height:100%;grid-template-rows:42px 1fr 30px}
+.app{display:grid;height:100%;width:100%;max-width:1280px;min-width:0;margin:0 auto;overflow-x:hidden;grid-template-rows:auto 1fr 30px}
 .top,.bot,.left{background:#0f131a}
-.top{display:flex;align-items:center;gap:8px;padding:0 10px;border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line);min-width:0}
 .logo{font-weight:800;color:#fff;font-size:14px}.logo span{color:var(--accent)}
-.sym{background:var(--pane);border:1px solid var(--line);padding:5px 8px;min-width:250px;border-radius:3px}
+.sym{background:var(--pane);border:1px solid var(--line);padding:5px 8px;min-width:0;width:180px;max-width:100%;border-radius:3px}
 .seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
 .seg button{padding:4px 8px;color:var(--muted)}.seg button.on{background:var(--accent);color:#fff}
 .grow{flex:1}
 .chip{border:1px solid var(--line);padding:3px 7px;border-radius:3px;color:var(--muted)}
 .chip.warn{color:var(--warn);border-color:#5a3d16}.chip.on{border-color:var(--accent);color:#fff}
 .chip.live{color:var(--up);border-color:#1b5e55}
-.desk{display:grid;grid-template-columns:44px 1fr 348px;min-height:0}
+.desk{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,280px);min-width:0;min-height:0}
 .left{border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding-top:8px;gap:4px}
 .left button{width:32px;height:32px;border-radius:4px;color:var(--muted)}
 .left button.on,.left button:hover{background:var(--pane);color:#fff}
@@ -36,7 +36,7 @@ input{font:inherit;color:inherit}
 .paneC.hidden{display:none}
 .tag{position:absolute;left:8px;top:4px;z-index:2;color:var(--muted);font-size:10px;letter-spacing:.4px;text-transform:uppercase;pointer-events:none}
 .xaxis{display:flex;justify-content:space-between;align-items:center;padding:0 10px;color:var(--muted);border-top:1px solid var(--line);font-size:11px}
-.right{border-left:1px solid var(--line);display:grid;grid-template-rows:32px 1fr 168px;min-height:0;background:var(--pane)}
+.right{border-left:1px solid var(--line);display:grid;grid-template-rows:32px 1fr 168px;min-width:0;min-height:0;background:var(--pane)}
 .tabs{display:flex;border-bottom:1px solid var(--line)}
 .tabs button{flex:1;padding:8px 0;color:var(--muted)}.tabs button.on{color:#fff;border-bottom:2px solid var(--accent)}
 .list{overflow:auto}
@@ -88,7 +88,10 @@ tr.final-row{opacity:.72}
 @keyframes scan{from{transform:translateX(-40%)}to{transform:translateX(40%)}}
 .bot{position:relative}
 .app.pregame .mid,.app.pregame .left{display:none}
-.app.pregame .desk{grid-template-columns:1fr 372px}
+.app.pregame .right{display:grid;grid-template-rows:32px 1fr}
+.app.pregame .details{display:none}
+.app.pregame .desk{grid-template-columns:minmax(0,1fr) minmax(240px,280px);min-height:0}
+.app.pregame #pre{min-height:0;height:100%}
 #pre{display:none;overflow:auto;padding:14px 16px 24px;background:
   radial-gradient(900px 420px at 10% -10%,#2a1650 0%,transparent 50%),
   radial-gradient(800px 380px at 90% 0%,#0d2a28 0%,transparent 46%),
@@ -97,15 +100,15 @@ tr.final-row{opacity:.72}
 .pre-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}
 .pre-hero h1{margin:0;font-size:28px;letter-spacing:.04em;color:#fff}
 .pre-hero .sub{color:#9aa3b5;margin-top:4px}
-.rack{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.card{position:relative;border-radius:10px;padding:12px 13px 14px;background:linear-gradient(180deg,#161b28,#10141c);border:1px solid #2a3144;box-shadow:0 10px 28px #0006;min-height:128px;overflow:hidden}
+.rack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;grid-auto-rows:min-content;gap:12px}
+.card{position:relative;border-radius:10px;padding:12px 14px 14px;background:linear-gradient(180deg,#161b28,#10141c);border:1px solid #2a3144;box-shadow:0 10px 28px #0006;height:max-content;min-height:0;overflow:visible}
 .card:before{content:"";position:absolute;inset:0 auto auto 0;height:3px;width:100%}
 .card.mythic{border-color:#f0c14b88}.card.mythic:before{background:linear-gradient(90deg,#f0c14b,#ff7a18)}
 .card.legend{border-color:#b388ff88}.card.legend:before{background:linear-gradient(90deg,#7c4dff,#e040fb)}
 .card.epic{border-color:#40c4ff88}.card.epic:before{background:linear-gradient(90deg,#29b6f6,#26a69a)}
 .card.rare{border-color:#26a69a88}.card.rare:before{background:#26a69a}
-.card.empty{opacity:.72;border-style:dashed}
-.card h3{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#c5cbe0}
+.card.empty{opacity:.72;border-style:dashed;padding:10px 14px}
+.card h3{margin:0 0 10px;padding-right:64px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#c5cbe0;line-height:1.3}
 .card .big{font-size:22px;font-weight:700;color:#fff;letter-spacing:.02em;font-family:"IBM Plex Mono",monospace}
 .card p{margin:6px 0 0;color:#9aa3b5;font-size:12px;line-height:1.45}
 .src{position:absolute;top:10px;right:10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border-radius:999px;background:#1b2230;color:#8b93a7}
@@ -741,12 +744,11 @@ function preCard(pack){
     '<div class="card rare"><span class="src m">NEON</span><h3>Arm fade</h3><div class="pills"><span class="pill go">Webb SI no fade</span><span class="pill hot">Pivetta leash</span></div><p>'+pack.fade.webb.note+' Velo '+pack.fade.webb.velo+' · HB '+pack.fade.webb.hb+'.</p><p>'+pack.fade.pivetta.note+'</p></div>'+
     '<div class="card empty"><span class="src e">STALE</span><h3>Bullpen fatigue</h3><p>'+pack.pen.note+'</p></div>'+
     '<div class="card rare"><span class="src p">PUBLIC</span><h3>Closer desk</h3><p>'+pack.closer.sd+'</p><p>'+pack.closer.sf+'</p><p>'+pack.closer.il+'</p></div>'+
-    '<div class="card '+(pack.ump.lean.indexOf("HITTER")>=0?"legend":"rare")+'"><span class="src p">PUBLIC</span><h3>Home plate</h3><div class="big">'+pack.ump.name+'</div><div class="pills"><span class="pill hot">'+pack.ump.lean+'</span><span class="pill">K factor '+pack.ump.kFac+'</span><span class="pill">zone tight</span></div><p>UmpScorecards 2026: accuracy '+pack.ump.acc+' ('+pack.ump.aaee+' vs expected) · consistency '+pack.ump.cons+' · favor '+pack.ump.favor+'.</p><p>Capper zone '+pack.ump.zone+' · '+pack.ump.kg+' K/G · '+pack.ump.bbg+' BB/G. Covers called-strike '+pack.ump.str+' · '+pack.ump.rpg+' R/G.</p><p class="note-empty">Called 3rd-strike rate and pitch-type bias: EMPTY. Neon has the name only.</p></div>'+
-    '<div class="card legend"><span class="src p">PUBLIC</span><h3>They own each other</h3><div class="pills">'+owns+'</div><p>Webb has Tatis. Machado has Webb. Sample sizes live on the pills.</p></div>'+
-    '<div class="card epic"><span class="src p">PUBLIC</span><h3>Hot / park</h3><div class="pills">'+hots+'</div><p>19 mph out to CF at Oracle is the park card. Not a park-factor table — weather is measured.</p></div>'+
-    '<div class="card empty"><span class="src e">EMPTY</span><h3>Sentiment</h3><p class="note-empty">'+pack.sentiment.note+'</p></div>'+
-    '<div class="card rare"><span class="src p">PUBLIC</span><h3>Contracts</h3><div class="pills">'+pack.contract.rows.map(r=>'<span class="pill'+(r.hot?' hot':'')+'">'+r.who+' · '+r.flag+'</span>').join('')+'</div>'+pack.contract.rows.map(r=>'<div style="display:grid;grid-template-columns:90px 70px 70px 1fr;gap:8px;padding:4px 0;border-bottom:1px solid #1b2230"><b>'+r.who+'</b><span>'+r.cash+'</span><span>thru '+r.thru+'</span><span>'+r.flag+'</span></div>').join('')+'<p>'+pack.contract.note+'</p></div>'+
-    '<div class="card empty"><span class="src e">EMPTY</span><h3>Desk 10k sims</h3><p class="note-empty">'+pack.deskSim.note+' Buy THE BAT X / PECOTA game file, or we stand up Poisson on model_inputs_v2 (inputs exist, output table empty).</p></div>'+
+    '<div class="card '+(pack.ump.lean.indexOf("HITTER")>=0?"legend":"rare")+'"><span class="src p">PUBLIC</span><h3>Home plate</h3><div class="big">'+pack.ump.name+'</div><div class="pills"><span class="pill hot">'+pack.ump.lean+'</span><span class="pill">K '+pack.ump.kFac+'</span><span class="pill">acc '+pack.ump.acc+'</span></div><p>UmpScorecards 2026 · consistency '+pack.ump.cons+' · '+pack.ump.aaee+' vs expected. Called-K3 EMPTY.</p></div>'+
+    '<div class="card legend"><span class="src p">PUBLIC</span><h3>They own each other</h3>'+pack.own.map(o=>'<div style="display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #1b2230"><b>'+o.who+'</b><span>'+o.line+'</span></div>').join('')+'</div>'+
+    '<div class="card epic"><span class="src p">PUBLIC</span><h3>Hot / park</h3><div class="pills">'+hots+'</div><p>19 mph out to CF at Oracle. Weather is measured. Not a park-factor table.</p></div>'+
+    '<div class="card rare"><span class="src p">PUBLIC</span><h3>Contracts</h3>'+pack.contract.rows.map(r=>'<div style="display:grid;grid-template-columns:1fr 64px 72px;gap:8px;padding:5px 0;border-bottom:1px solid #1b2230"><b>'+r.who+(r.hot?' · club opt':'')+'</b><span>'+r.cash+'</span><span>'+r.thru+'</span></div>').join('')+'<p>Pivetta 2027 flipped to a $14M club option after 130 IL days.</p></div>'+
+    '<div class="card empty" style="grid-column:1/-1"><span class="src e">EMPTY</span><h3>Not wired</h3><p class="note-empty">Sentiment firehose · desk 10k sims · bullpen rest job (Neon zeros). Tags stay empty. No fake histogram.</p></div>'+
     '<div class="card rare" style="grid-column:1/-1"><span class="src p">PUBLIC</span><h3>Archetype tape</h3><div class="pills">'+(pack.arch.pills.map(p=>'<span class="pill">'+p+'</span>').join(''))+'</div>'+pack.arch.rows.map(r=>'<div style="display:grid;grid-template-columns:88px 90px 1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #1b2230"><b>'+r.date+'</b><span>'+r.score+'</span><span>'+r.who+' · '+r.line+'</span><span class="note-empty">'+r.why+' · '+r.wx+'</span></div>').join('')+'<p>'+pack.arch.note+'</p></div>'+
     '<div class="card mythic" style="grid-column:1/-1"><span class="src m">STORE</span><h3>Lineups · confirmed</h3><div class="lu"><div><b>SD</b><ol>'+pack.lu.sd.map(x=>'<li>'+x+'</li>').join('')+'</ol></div><div><b>SF</b><ol>'+pack.lu.sf.map(x=>'<li>'+x+'</li>').join('')+'</ol></div></div></div>'+
     '</div>';
